@@ -1,217 +1,114 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Это "голова" страницы. Здесь подключаются стили и настройки -->
     <meta charset="UTF-8">
-    <!-- Чтобы страница нормально выглядела на телефоне -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Название вкладки в браузере -->
-    <title>FitTrack — Трекер тренировок и КБЖУ</title>
-    <!-- Подключаем наш файл со стилями (красивости) -->
+    <meta name="theme-color" content="#101a2d">
+    <meta name="description" content="FitTrack — дневник тренировок и питания с расчётом калорий и КБЖУ.">
+    <title>FitTrack — тренировки и питание</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js" defer></script>
 </head>
 <body>
-
-    <!-- ===================== ЭКРАН ВХОДА / РЕГИСТРАЦИИ ===================== -->
-    <!-- id="screen-auth" — это уникальное имя блока, чтобы JavaScript мог его найти -->
-    <div id="screen-auth" class="screen">
-        <div class="card auth-card">
-            <h1>FitTrack</h1>
-            <p class="subtitle">Тренировки + питание + КБЖУ</p>
-
-            <!-- Вкладки: Вход / Регистрация -->
-            <div class="tabs">
-                <!-- Кнопка "Вход". data-tab="login" — метка, по которой JS поймёт, что нажали -->
-                <button class="tab active" data-tab="login">Вход</button>
-                <button class="tab" data-tab="register">Регистрация</button>
+    <main id="screen-auth" class="screen auth-screen">
+        <section class="card auth-card" aria-labelledby="auth-title">
+            <a class="brand auth-brand" href="#" aria-label="FitTrack — главная"><span class="brand-mark">F</span> FitTrack</a>
+            <p class="eyebrow">ТВОЙ ПЛАН. ТВОЙ РИТМ.</p>
+            <h1 id="auth-title">Забота о себе —<br>это система.</h1>
+            <p class="subtitle">Записывай тренировки, следи за питанием и двигайся к цели без лишней суеты.</p>
+            <div class="tabs" role="tablist" aria-label="Авторизация">
+                <button class="tab active" type="button" data-tab="login" role="tab" aria-selected="true">Вход</button>
+                <button class="tab" type="button" data-tab="register" role="tab" aria-selected="false">Регистрация</button>
             </div>
-
-            <!-- Форма входа -->
-            <form id="form-login">
+            <form id="form-login" class="auth-form">
                 <label for="login-email">Email</label>
-                <input type="email" id="login-email" placeholder="you@example.com" required>
-
+                <input type="email" id="login-email" autocomplete="email" placeholder="you@example.com" required>
                 <label for="login-password">Пароль</label>
-                <input type="password" id="login-password" placeholder="••••••••" required>
-
-                <button type="submit" class="btn btn-primary">Войти</button>
+                <input type="password" id="login-password" autocomplete="current-password" placeholder="Введите пароль" required>
+                <button type="submit" class="btn btn-primary">Войти <span aria-hidden="true">→</span></button>
             </form>
-
-            <!-- Форма регистрации (сначала скрыта) -->
-            <form id="form-register" class="hidden">
-                <label for="reg-name">Имя</label>
-                <input type="text" id="reg-name" placeholder="Александра" required>
-
+            <form id="form-register" class="auth-form hidden">
+                <label for="reg-name">Как к вам обращаться?</label>
+                <input type="text" id="reg-name" autocomplete="name" placeholder="Ваше имя" maxlength="60" required>
                 <label for="reg-email">Email</label>
-                <input type="email" id="reg-email" placeholder="you@example.com" required>
-
+                <input type="email" id="reg-email" autocomplete="email" placeholder="you@example.com" required>
                 <label for="reg-password">Пароль</label>
-                <input type="password" id="reg-password" placeholder="минимум 6 символов" required minlength="6">
-
-                <label for="reg-gender">Пол</label>
+                <input type="password" id="reg-password" autocomplete="new-password" placeholder="Не менее 6 символов" minlength="6" required>
+                <label for="reg-gender">Пол для расчёта нормы</label>
                 <select id="reg-gender" required>
-                    <option value="">Выберите</option>
+                    <option value="">Выберите вариант</option>
                     <option value="female">Женский</option>
                     <option value="male">Мужской</option>
                 </select>
-
-                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                <button type="submit" class="btn btn-primary">Создать аккаунт <span aria-hidden="true">→</span></button>
             </form>
-        </div>
-    </div>
+            <p class="auth-note">Данные этого демонстрационного приложения хранятся только в браузере на этом устройстве.</p>
+        </section>
+    </main>
 
-    <!-- ===================== ГЛАВНЫЙ ЭКРАН ПРИЛОЖЕНИЯ ===================== -->
     <div id="screen-app" class="screen hidden">
+        <header class="topbar">
+            <a class="brand" href="#" aria-label="FitTrack — главная"><span class="brand-mark">F</span> FitTrack</a>
+            <nav class="nav-links" aria-label="Основная навигация">
+                <button class="nav-btn active" type="button" data-page="dashboard">Обзор</button>
+                <button class="nav-btn" type="button" data-page="workouts">Тренировки</button>
+                <button class="nav-btn" type="button" data-page="nutrition">Питание</button>
+                <button class="nav-btn" type="button" data-page="profile">Профиль</button>
+            </nav>
+            <button id="btn-logout" class="btn btn-quiet" type="button">Выйти</button>
+        </header>
 
-        <nav class="navbar">
-            <div class="logo">FitTrack</div>
-            <div class="nav-links">
-                <button class="nav-btn active" data-page="dashboard">Главная</button>
-                <button class="nav-btn" data-page="workouts">Тренировки</button>
-                <button class="nav-btn" data-page="nutrition">Питание</button>
-                <button class="nav-btn" data-page="profile">Профиль</button>
-            </div>
-            <button id="btn-logout" class="btn btn-small">Выйти</button>
-        </nav>
+        <main class="app-main">
+            <section id="page-dashboard" class="page">
+                <div class="page-heading">
+                    <div><p class="eyebrow" id="today-label">ВАШ ДЕНЬ</p><h1 id="greeting">Добро пожаловать!</h1><p class="muted">Небольшие шаги каждый день складываются в большой результат.</p></div>
+                </div>
+                <div class="section-heading"><div><p class="eyebrow">ПИТАНИЕ СЕГОДНЯ</p><h2>Баланс дня</h2></div><button class="text-link" type="button" data-page="nutrition">Дневник питания <span aria-hidden="true">→</span></button></div>
+                <div class="progress-grid">
+                    <article class="progress-card calorie-card"><div class="progress-title">Калории</div><div class="progress-value"><span id="cal-current">0</span><small> / <span id="cal-target">0</span> ккал</small></div><div class="progress-bar"><div id="cal-bar" class="progress-fill"></div></div><p class="progress-caption">Съедено / дневная цель</p></article>
+                    <article class="progress-card"><div class="progress-title">Белки</div><div class="progress-value"><span id="prot-current">0</span><small> / <span id="prot-target">0</span> г</small></div><div class="progress-bar"><div id="prot-bar" class="progress-fill proteins"></div></div><p class="progress-caption">Строительный материал</p></article>
+                    <article class="progress-card"><div class="progress-title">Жиры</div><div class="progress-value"><span id="fat-current">0</span><small> / <span id="fat-target">0</span> г</small></div><div class="progress-bar"><div id="fat-bar" class="progress-fill fats"></div></div><p class="progress-caption">Энергия и баланс</p></article>
+                    <article class="progress-card"><div class="progress-title">Углеводы</div><div class="progress-value"><span id="carb-current">0</span> <small>/ <span id="carb-target">0</span> г</small></div><div class="progress-bar"><div id="carb-bar" class="progress-fill carbs"></div></div><p class="progress-caption">Топливо на день</p></article>
+                </div>
+                <div class="quick-actions"><button class="btn btn-primary" type="button" data-page="workouts"><span aria-hidden="true">＋</span> Записать тренировку</button><button class="btn btn-secondary" type="button" data-page="nutrition"><span aria-hidden="true">＋</span> Добавить еду</button></div>
+                <div class="section-heading recent-heading"><div><p class="eyebrow">АКТИВНОСТЬ</p><h2>Тренировки сегодня</h2></div><button class="text-link" type="button" data-page="workouts">Все тренировки <span aria-hidden="true">→</span></button></div>
+                <div id="dashboard-workouts" class="list" aria-live="polite"></div>
+            </section>
 
-        <div id="page-dashboard" class="page">
-            <h2>Сегодня</h2>
-            <p id="greeting" class="greeting"></p>
+            <section id="page-workouts" class="page hidden">
+                <div class="page-heading page-heading-row"><div><p class="eyebrow">ДВИГАЙСЯ К ЦЕЛИ</p><h1>Тренировки</h1><p class="muted">Записывай занятия и отслеживай свою регулярность.</p></div><button id="btn-add-workout" class="btn btn-primary" type="button">＋ Добавить</button></div>
+                <form id="workout-form" class="card form-card hidden">
+                    <div class="form-title"><div><p class="eyebrow">НОВАЯ ЗАПИСЬ</p><h2>Добавить тренировку</h2></div><span class="form-icon" aria-hidden="true">↗</span></div>
+                    <div class="form-grid"><div><label for="workout-date">Дата</label><input type="date" id="workout-date" required></div><div><label for="workout-exercise">Упражнение</label><select id="workout-exercise" required><option value="Приседания">Приседания</option><option value="Жим лёжа">Жим лёжа</option><option value="Подтягивания">Подтягивания</option><option value="Бег">Бег</option><option value="Планка">Планка</option></select></div><div><label for="workout-sets">Подходы</label><input type="number" id="workout-sets" value="3" min="1" max="100" required></div><div><label for="workout-reps">Повторения / минуты</label><input type="number" id="workout-reps" value="10" min="1" max="10000" required></div><div><label for="workout-weight">Вес, кг <span class="optional">(если нужен)</span></label><input type="number" id="workout-weight" value="0" min="0" max="1000" step="0.5" required></div></div>
+                    <div class="form-buttons"><button type="submit" class="btn btn-primary">Сохранить тренировку</button><button id="btn-cancel-workout" type="button" class="btn btn-secondary">Отмена</button></div>
+                </form>
+                <div class="section-heading list-heading"><div><p class="eyebrow">ВАШ ЖУРНАЛ</p><h2>История занятий</h2></div></div>
+                <div id="workout-list" class="list" aria-live="polite"></div>
+            </section>
 
-            <div class="progress-grid">
-                <div class="progress-card">
-                    <div class="progress-title">Калории</div>
-                    <div class="progress-value"><span id="cal-current">0</span> / <span id="cal-target">0</span></div>
-                    <div class="progress-bar"><div id="cal-bar" class="progress-fill"></div></div>
-                </div>
-                <div class="progress-card">
-                    <div class="progress-title">Белки (г)</div>
-                    <div class="progress-value"><span id="prot-current">0</span> / <span id="prot-target">0</span></div>
-                    <div class="progress-bar"><div id="prot-bar" class="progress-fill proteins"></div></div>
-                </div>
-                <div class="progress-card">
-                    <div class="progress-title">Жиры (г)</div>
-                    <div class="progress-value"><span id="fat-current">0</span> / <span id="fat-target">0</span></div>
-                    <div class="progress-bar"><div id="fat-bar" class="progress-fill fats"></div></div>
-                </div>
-                <div class="progress-card">
-                    <div class="progress-title">Углеводы (г)</div>
-                    <div class="progress-value"><span id="carb-current">0</span> / <span id="carb-target">0</span></div>
-                    <div class="progress-bar"><div id="carb-bar" class="progress-fill carbs"></div></div>
-                </div>
-            </div>
+            <section id="page-nutrition" class="page hidden">
+                <div class="page-heading page-heading-row"><div><p class="eyebrow">ЕДА БЕЗ СЛОЖНЫХ ТАБЛИЦ</p><h1>Питание</h1><p class="muted">Добавляй продукты в дневник — КБЖУ пересчитаются автоматически.</p></div><button id="btn-add-food" class="btn btn-primary" type="button">＋ Добавить</button></div>
+                <form id="food-form" class="card form-card hidden">
+                    <div class="form-title"><div><p class="eyebrow">ДНЕВНИК ПИТАНИЯ</p><h2>Добавить продукт</h2></div><span class="form-icon" aria-hidden="true">✳</span></div>
+                    <div class="form-grid"><div><label for="food-select">Продукт</label><select id="food-select"><option value="Куриная грудь|165|31|3.6|0">Куриная грудь</option><option value="Гречка|132|4.5|1.1|25">Гречка</option><option value="Яйцо куриное|155|13|11|1.1">Яйцо куриное</option><option value="Творог 5%|121|17|5|1.8">Творог 5%</option><option value="Банан|89|1.1|0.3|23">Банан</option><option value="Овсянка|68|2.4|1.4|12">Овсянка</option><option value="Рис|130|2.7|0.3|28">Рис</option><option value="Яблоко|52|0.3|0.2|14">Яблоко</option></select></div><div><label for="food-grams">Количество, грамм</label><input type="number" id="food-grams" value="100" min="1" max="10000" step="1" required></div><div><label for="food-meal">Приём пищи</label><select id="food-meal"><option value="Завтрак">Завтрак</option><option value="Обед">Обед</option><option value="Ужин">Ужин</option><option value="Перекус">Перекус</option></select></div></div>
+                    <div class="form-buttons"><button type="submit" class="btn btn-primary">Добавить в дневник</button><button id="btn-cancel-food" type="button" class="btn btn-secondary">Отмена</button></div>
+                </form>
+                <div class="section-heading list-heading"><div><p class="eyebrow">СЕГОДНЯ</p><h2>Записи питания</h2></div></div>
+                <div id="food-list" class="list" aria-live="polite"></div>
+                <p class="nutrition-note">Пищевая ценность указана ориентировочно на 100 г продукта и может отличаться в зависимости от приготовления и производителя.</p>
+            </section>
 
-            <div class="quick-actions">
-                <button class="btn btn-primary" data-page="workouts">+ Тренировка</button>
-                <button class="btn btn-primary" data-page="nutrition">+ Еда</button>
-            </div>
-        </div>
-
-        <div id="page-workouts" class="page hidden">
-            <div class="page-header">
-                <h2>Тренировки</h2>
-                <button id="btn-add-workout" class="btn btn-primary">+ Добавить</button>
-            </div>
-            <div id="workout-list" class="list"></div>
-            <div id="workout-form" class="card hidden">
-                <h3>Новая тренировка</h3>
-                <label>Дата</label>
-                <input type="date" id="workout-date">
-                <label>Упражнение</label>
-                <select id="workout-exercise">
-                    <option value="Приседания">Приседания</option>
-                    <option value="Жим лёжа">Жим лёжа</option>
-                    <option value="Подтягивания">Подтягивания</option>
-                    <option value="Бег">Бег</option>
-                    <option value="Планка">Планка</option>
-                </select>
-                <label>Подходы</label>
-                <input type="number" id="workout-sets" value="3" min="1">
-                <label>Повторения</label>
-                <input type="number" id="workout-reps" value="10" min="1">
-                <label>Вес (кг)</label>
-                <input type="number" id="workout-weight" value="0" min="0" step="0.5">
-                <div class="form-buttons">
-                    <button id="btn-save-workout" class="btn btn-primary">Сохранить</button>
-                    <button id="btn-cancel-workout" class="btn btn-secondary">Отмена</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="page-nutrition" class="page hidden">
-            <div class="page-header">
-                <h2>Питание сегодня</h2>
-                <button id="btn-add-food" class="btn btn-primary">+ Добавить</button>
-            </div>
-            <div id="food-list" class="list"></div>
-            <div id="food-form" class="card hidden">
-                <h3>Добавить продукт</h3>
-                <label>Продукт</label>
-                <select id="food-select">
-                    <option value="Куриная грудь|165|31|3.6|0">Куриная грудь</option>
-                    <option value="Гречка|132|4.5|1.1|25">Гречка</option>
-                    <option value="Яйцо куриное|155|13|11|1.1">Яйцо куриное</option>
-                    <option value="Творог 5%|121|17|5|1.8">Творог 5%</option>
-                    <option value="Банан|89|1.1|0.3|23">Банан</option>
-                    <option value="Овсянка|68|2.4|1.4|12">Овсянка</option>
-                    <option value="Рис|130|2.7|0.3|28">Рис</option>
-                    <option value="Яблоко|52|0.3|0.2|14">Яблоко</option>
-                </select>
-                <label>Количество (грамм)</label>
-                <input type="number" id="food-grams" value="100" min="1">
-                <label>Приём пищи</label>
-                <select id="food-meal">
-                    <option value="Завтрак">Завтрак</option>
-                    <option value="Обед">Обед</option>
-                    <option value="Ужин">Ужин</option>
-                    <option value="Перекус">Перекус</option>
-                </select>
-                <div class="form-buttons">
-                    <button id="btn-save-food" class="btn btn-primary">Сохранить</button>
-                    <button id="btn-cancel-food" class="btn btn-secondary">Отмена</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="page-profile" class="page hidden">
-            <h2>Мой профиль</h2>
-            <div class="card">
-                <label>Имя</label>
-                <input type="text" id="profile-name">
-                <label>Пол</label>
-                <select id="profile-gender">
-                    <option value="female">Женский</option>
-                    <option value="male">Мужской</option>
-                </select>
-                <label>Возраст (лет)</label>
-                <input type="number" id="profile-age" min="10" max="100">
-                <label>Рост (см)</label>
-                <input type="number" id="profile-height" min="100" max="250">
-                <label>Вес (кг)</label>
-                <input type="number" id="profile-weight" min="30" max="300" step="0.1">
-                <label>Активность</label>
-                <select id="profile-activity">
-                    <option value="1.2">Сидячий образ жизни</option>
-                    <option value="1.375">Лёгкая (1–3 тренировки)</option>
-                    <option value="1.55">Средняя (3–5 тренировок)</option>
-                    <option value="1.725">Высокая</option>
-                    <option value="1.9">Очень высокая</option>
-                </select>
-                <label>Цель</label>
-                <select id="profile-goal">
-                    <option value="lose">Похудение</option>
-                    <option value="maintain">Поддержание</option>
-                    <option value="gain">Набор массы</option>
-                </select>
-                <button id="btn-save-profile" class="btn btn-primary">Сохранить профиль</button>
-                <div id="norm-result" class="norm-box hidden">
-                    <strong>Ваша норма:</strong>
-                    <div id="norm-text"></div>
-                </div>
-            </div>
-        </div>
+            <section id="page-profile" class="page hidden">
+                <div class="page-heading"><p class="eyebrow">НАСТРОЙ СВОЙ ПЛАН</p><h1>Профиль</h1><p class="muted">Заполни данные, чтобы получить ориентировочную дневную норму.</p></div>
+                <form id="profile-form" class="card profile-card">
+                    <div class="form-title"><div><p class="eyebrow">ЛИЧНЫЕ ДАННЫЕ</p><h2>Мои параметры</h2></div><span class="form-icon" aria-hidden="true">◎</span></div>
+                    <div class="form-grid"><div><label for="profile-name">Имя</label><input type="text" id="profile-name" maxlength="60" required></div><div><label for="profile-gender">Пол для формулы</label><select id="profile-gender"><option value="female">Женский</option><option value="male">Мужской</option></select></div><div><label for="profile-age">Возраст, лет</label><input type="number" id="profile-age" min="10" max="100" required></div><div><label for="profile-height">Рост, см</label><input type="number" id="profile-height" min="100" max="250" required></div><div><label for="profile-weight">Вес, кг</label><input type="number" id="profile-weight" min="30" max="300" step="0.1" required></div><div><label for="profile-activity">Уровень активности</label><select id="profile-activity"><option value="1.2">Сидячий образ жизни</option><option value="1.375">Лёгкая (1–3 тренировки в неделю)</option><option value="1.55">Средняя (3–5 тренировок в неделю)</option><option value="1.725">Высокая (6–7 тренировок)</option><option value="1.9">Очень высокая</option></select></div><div><label for="profile-goal">Цель</label><select id="profile-goal"><option value="lose">Снижение веса</option><option value="maintain">Поддержание веса</option><option value="gain">Набор массы</option></select></div></div>
+                    <button type="submit" class="btn btn-primary profile-save">Сохранить профиль</button>
+                    <div id="norm-result" class="norm-box hidden" aria-live="polite"><p class="eyebrow">ВАША ОРИЕНТИРОВОЧНАЯ ЦЕЛЬ</p><div id="norm-text"></div><p class="disclaimer">Расчёт по формуле Миффлина–Сан Жеора — ориентир, а не медицинская рекомендация.</p></div>
+                </form>
+            </section>
+        </main>
+        <footer class="app-footer">FitTrack <span>·</span> Трекер тренировок и питания</footer>
     </div>
-
-    <script src="js/app.js" defer></script>
 </body>
 </html>
