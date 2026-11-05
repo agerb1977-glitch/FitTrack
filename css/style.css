@@ -1,0 +1,281 @@
+/* ============================================================
+   ЭТО ФАЙЛ СТИЛЕЙ (CSS)
+   Здесь мы говорим браузеру, КАК всё должно выглядеть:
+   цвета, размеры, отступы, кнопки и т.д.
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+.screen {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.auth-card {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.auth-card h1 {
+    font-size: 32px;
+    color: #0ea5e9;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: #64748b;
+    margin-bottom: 24px;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.tab.active {
+    background: #0ea5e9;
+    color: white;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin: 12px 0 4px;
+    font-size: 14px;
+    color: #475569;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #0ea5e9;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+.btn-primary {
+    background: #0ea5e9;
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: #0284c7;
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    font-size: 13px;
+    background: #e2e8f0;
+    color: #334155;
+    margin-top: 0;
+}
+
+.navbar {
+    background: #0f172a;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 18px;
+    color: #0ea5e9;
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.nav-btn.active, .nav-btn:hover {
+    background: #1e293b;
+    color: white;
+}
+
+.page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.greeting {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.progress-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.progress-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.progress-title {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.progress-value {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #0ea5e9;
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+
+.progress-fill.proteins { background: #10b981; }
+.progress-fill.fats { background: #f59e0b; }
+.progress-fill.carbs { background: #8b5cf6; }
+
+.quick-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.quick-actions .btn {
+    width: auto;
+    flex: 1;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list-item {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-item .info { flex: 1; }
+.list-item .title { font-weight: bold; margin-bottom: 2px; }
+.list-item .meta { font-size: 13px; color: #64748b; }
+.list-item .kcal { font-weight: bold; color: #0ea5e9; }
+
+#workout-form, #food-form { margin-top: 16px; }
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.form-buttons .btn { flex: 1; }
+
+.norm-box {
+    margin-top: 20px;
+    padding: 16px;
+    background: #ecfdf5;
+    border-radius: 10px;
+    color: #065f46;
+}
+
+.norm-box strong {
+    display: block;
+    margin-bottom: 6px;
+}
