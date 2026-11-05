@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Это "голова" страницы. Здесь подключаются стили и настройки -->
+    <meta charset="UTF-8">
+    <!-- Чтобы страница нормально выглядела на телефоне -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Название вкладки в браузере -->
+    <title>FitTrack — Трекер тренировок и КБЖУ</title>
+    <!-- Подключаем наш файл со стилями (красивости) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ===================== ЭКРАН ВХОДА / РЕГИСТРАЦИИ ===================== -->
+    <!-- id="screen-auth" — это уникальное имя блока, чтобы JavaScript мог его найти -->
+    <div id="screen-auth" class="screen">
+        <div class="card auth-card">
+            <h1>FitTrack</h1>
+            <p class="subtitle">Тренировки + питание + КБЖУ</p>
+
+            <!-- Вкладки: Вход / Регистрация -->
+            <div class="tabs">
+                <!-- Кнопка "Вход". data-tab="login" — метка, по которой JS поймёт, что нажали -->
+                <button class="tab active" data-tab="login">Вход</button>
+                <button class="tab" data-tab="register">Регистрация</button>
+            </div>
+
+            <!-- Форма входа -->
+            <form id="form-login">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="you@example.com" required>
+
+                <label for="login-password">Пароль</label>
+                <input type="password" id="login-password" placeholder="••••••••" required>
+
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+
+            <!-- Форма регистрации (сначала скрыта) -->
+            <form id="form-register" class="hidden">
+                <label for="reg-name">Имя</label>
+                <input type="text" id="reg-name" placeholder="Александра" required>
+
+                <label for="reg-email">Email</label>
+                <input type="email" id="reg-email" placeholder="you@example.com" required>
+
+                <label for="reg-password">Пароль</label>
+                <input type="password" id="reg-password" placeholder="минимум 6 символов" required minlength="6">
+
+                <label for="reg-gender">Пол</label>
+                <select id="reg-gender" required>
+                    <option value="">Выберите</option>
+                    <option value="female">Женский</option>
+                    <option value="male">Мужской</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===================== ГЛАВНЫЙ ЭКРАН ПРИЛОЖЕНИЯ ===================== -->
+    <div id="screen-app" class="screen hidden">
+
+        <nav class="navbar">
+            <div class="logo">FitTrack</div>
+            <div class="nav-links">
+                <button class="nav-btn active" data-page="dashboard">Главная</button>
+                <button class="nav-btn" data-page="workouts">Тренировки</button>
+                <button class="nav-btn" data-page="nutrition">Питание</button>
+                <button class="nav-btn" data-page="profile">Профиль</button>
+            </div>
+            <button id="btn-logout" class="btn btn-small">Выйти</button>
+        </nav>
+
+        <div id="page-dashboard" class="page">
+            <h2>Сегодня</h2>
+            <p id="greeting" class="greeting"></p>
+
+            <div class="progress-grid">
+                <div class="progress-card">
+                    <div class="progress-title">Калории</div>
+                    <div class="progress-value"><span id="cal-current">0</span> / <span id="cal-target">0</span></div>
+                    <div class="progress-bar"><div id="cal-bar" class="progress-fill"></div></div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-title">Белки (г)</div>
+                    <div class="progress-value"><span id="prot-current">0</span> / <span id="prot-target">0</span></div>
+                    <div class="progress-bar"><div id="prot-bar" class="progress-fill proteins"></div></div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-title">Жиры (г)</div>
+                    <div class="progress-value"><span id="fat-current">0</span> / <span id="fat-target">0</span></div>
+                    <div class="progress-bar"><div id="fat-bar" class="progress-fill fats"></div></div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-title">Углеводы (г)</div>
+                    <div class="progress-value"><span id="carb-current">0</span> / <span id="carb-target">0</span></div>
+                    <div class="progress-bar"><div id="carb-bar" class="progress-fill carbs"></div></div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="btn btn-primary" data-page="workouts">+ Тренировка</button>
+                <button class="btn btn-primary" data-page="nutrition">+ Еда</button>
+            </div>
+        </div>
+
+        <div id="page-workouts" class="page hidden">
+            <div class="page-header">
+                <h2>Тренировки</h2>
+                <button id="btn-add-workout" class="btn btn-primary">+ Добавить</button>
+            </div>
+            <div id="workout-list" class="list"></div>
+            <div id="workout-form" class="card hidden">
+                <h3>Новая тренировка</h3>
+                <label>Дата</label>
+                <input type="date" id="workout-date">
+                <label>Упражнение</label>
+                <select id="workout-exercise">
+                    <option value="Приседания">Приседания</option>
+                    <option value="Жим лёжа">Жим лёжа</option>
+                    <option value="Подтягивания">Подтягивания</option>
+                    <option value="Бег">Бег</option>
+                    <option value="Планка">Планка</option>
+                </select>
+                <label>Подходы</label>
+                <input type="number" id="workout-sets" value="3" min="1">
+                <label>Повторения</label>
+                <input type="number" id="workout-reps" value="10" min="1">
+                <label>Вес (кг)</label>
+                <input type="number" id="workout-weight" value="0" min="0" step="0.5">
+                <div class="form-buttons">
+                    <button id="btn-save-workout" class="btn btn-primary">Сохранить</button>
+                    <button id="btn-cancel-workout" class="btn btn-secondary">Отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-nutrition" class="page hidden">
+            <div class="page-header">
+                <h2>Питание сегодня</h2>
+                <button id="btn-add-food" class="btn btn-primary">+ Добавить</button>
+            </div>
+            <div id="food-list" class="list"></div>
+            <div id="food-form" class="card hidden">
+                <h3>Добавить продукт</h3>
+                <label>Продукт</label>
+                <select id="food-select">
+                    <option value="Куриная грудь|165|31|3.6|0">Куриная грудь</option>
+                    <option value="Гречка|132|4.5|1.1|25">Гречка</option>
+                    <option value="Яйцо куриное|155|13|11|1.1">Яйцо куриное</option>
+                    <option value="Творог 5%|121|17|5|1.8">Творог 5%</option>
+                    <option value="Банан|89|1.1|0.3|23">Банан</option>
+                    <option value="Овсянка|68|2.4|1.4|12">Овсянка</option>
+                    <option value="Рис|130|2.7|0.3|28">Рис</option>
+                    <option value="Яблоко|52|0.3|0.2|14">Яблоко</option>
+                </select>
+                <label>Количество (грамм)</label>
+                <input type="number" id="food-grams" value="100" min="1">
+                <label>Приём пищи</label>
+                <select id="food-meal">
+                    <option value="Завтрак">Завтрак</option>
+                    <option value="Обед">Обед</option>
+                    <option value="Ужин">Ужин</option>
+                    <option value="Перекус">Перекус</option>
+                </select>
+                <div class="form-buttons">
+                    <button id="btn-save-food" class="btn btn-primary">Сохранить</button>
+                    <button id="btn-cancel-food" class="btn btn-secondary">Отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-profile" class="page hidden">
+            <h2>Мой профиль</h2>
+            <div class="card">
+                <label>Имя</label>
+                <input type="text" id="profile-name">
+                <label>Пол</label>
+                <select id="profile-gender">
+                    <option value="female">Женский</option>
+                    <option value="male">Мужской</option>
+                </select>
+                <label>Возраст (лет)</label>
+                <input type="number" id="profile-age" min="10" max="100">
+                <label>Рост (см)</label>
+                <input type="number" id="profile-height" min="100" max="250">
+                <label>Вес (кг)</label>
+                <input type="number" id="profile-weight" min="30" max="300" step="0.1">
+                <label>Активность</label>
+                <select id="profile-activity">
+                    <option value="1.2">Сидячий образ жизни</option>
+                    <option value="1.375">Лёгкая (1–3 тренировки)</option>
+                    <option value="1.55">Средняя (3–5 тренировок)</option>
+                    <option value="1.725">Высокая</option>
+                    <option value="1.9">Очень высокая</option>
+                </select>
+                <label>Цель</label>
+                <select id="profile-goal">
+                    <option value="lose">Похудение</option>
+                    <option value="maintain">Поддержание</option>
+                    <option value="gain">Набор массы</option>
+                </select>
+                <button id="btn-save-profile" class="btn btn-primary">Сохранить профиль</button>
+                <div id="norm-result" class="norm-box hidden">
+                    <strong>Ваша норма:</strong>
+                    <div id="norm-text"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js" defer></script>
+</body>
+</html>
